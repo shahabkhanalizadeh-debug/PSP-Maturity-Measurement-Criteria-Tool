@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معیار سنجش استراتژیک بلوغ تحول - شهاب خانعلی زاده</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/brands.min.css">
+    <style>
+        /* --- CSS اصلی --- */
+        :root {
+            --color-primary: #004c8c;
+            --color-secondary: #00a896;
+            --color-success: #4caf50;
+            --color-warning: #ff9800;
+            --color-danger: #f44336;
+            --color-light-bg: #f4f6f9;
+            /* رنگ‌های جدید برای توصیه‌ها */
+            --color-navy: #001f3f; 
+            --color-red-dark: #cc0000;
+            --color-green-dark: #008000;
+            --color-purple-dark: #5b0080;
+            /* رنگ جدید برای گلوگاه ارتقا */
+            --color-bottleneck: #e65100; 
+            --color-bottleneck-bg: #fff3e0;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--color-light-bg);
+            color: #333;
+            line-height: 1.8;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: var(--color-primary);
+            font-weight: 700;
+            border-bottom: 3px solid var(--color-secondary);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--color-secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 8px 15px;
+            background-color: #e6f7f5;
+            border-radius: 8px;
+            border-right: 5px solid var(--color-primary);
+        }
+
+        .question-group {
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fbfbfb;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            flex-grow: 1;
+            font-size: 0.95rem; 
+            font-weight: 400;
+            padding-left: 10px;
+        }
+
+        .icon-label {
+            color: var(--color-primary);
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+
+        .radio-options {
+            flex-shrink: 0; 
+            display: flex;
+            gap: 10px;
+        }
+        
+        .radio-options input[type="radio"] {
+            display: none;
+        }
+
+        .radio-options label {
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            white-space: nowrap; 
+            font-size: 0.9rem;
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #c9c9c9;
+            background-color: #f9f9f9;
+            color: #555;
+        }
+        
+        .radio-options label:hover {
+            background-color: #e6f7f5;
+        }
+        
+        /* --- استایل‌های پویا بر اساس امتیاز انتخاب شده --- */
+        input[value="3"]:checked + label {
+            background-color: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+            box-shadow: 0 2px 4px rgba(76, 175, 80, 0.4);
+        }
+
+        input[value="1.5"]:checked + label {
+            background-color: var(--color-warning);
+            border-color: var(--color-warning);
+            color: white;
+            box-shadow: 0 2px 4px rgba(255, 152, 0, 0.4);
+        }
+
+        input[value="0"]:checked + label {
+            background-color: var(--color-danger);
+            border-color: var(--color-danger);
+            color: white;
+            box-shadow: 0 2px 4px rgba(244, 67, 54, 0.4);
+        }
+        
+        #calculate-btn, .action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 25px;
+            font-size: 1.3rem;
+            font-weight: 700; 
+            font-family: 'Vazirmatn', sans-serif; 
+            color: #ffffff;
+            background-color: var(--color-primary);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 40px;
+        }
+
+        #calculate-btn:hover, .action-btn:hover {
+            background-color: #003a6b;
+            transform: translateY(-2px);
+        }
+
+        /* بخش نتایج */
+        #results {
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background-color: #f7f7f7; 
+            border: 2px dashed #ccc;
+            text-align: center;
+            display: none;
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s, border-color 0.5s; 
+        }
+
+        #results h3 {
+            color: #e57300;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        #result-level {
+            font-size: 1.8rem; 
+            font-weight: 700;
+            color: #ff5722;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            line-height: 1.3;
+        }
+
+        .recommendation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffffff; 
+            border-radius: 8px;
+            color: var(--color-primary);
+            font-weight: 600;
+            text-align: justify; 
+            border-right: 5px solid var(--color-secondary);
+            box-shadow: 0 2px 5px rgba(0, 76, 140, 0.1);
+        }
+        
+        .recommendation p {
+            text-align: justify; 
+            margin-bottom: 15px;
+        }
+        
+        /* --- استایل جدید: گلوگاه ارتقا --- */
+        .bottleneck-highlight {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--color-bottleneck-bg);
+            border-radius: 8px;
+            border: 2px solid var(--color-bottleneck);
+            color: #333;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.8;
+            box-shadow: 0 4px 10px rgba(230, 81, 0, 0.1);
+            position: relative;
+        }
+
+        .bottleneck-highlight strong {
+            color: var(--color-bottleneck);
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--color-bottleneck);
+            padding-bottom: 5px;
+        }
+        
+        .bottleneck-highlight i {
+            margin-left: 8px;
+            color: var(--color-bottleneck);
+        }
+        
+        /* استایل‌های داخلی توصیه‌ها */
+        .status-header {
+            color: var(--color-navy);
+            font-weight: 700;
+            margin-top: 5px;
+            display: inline;
+        }
+        .challenge-header {
+            color: var(--color-red-dark);
+            font-weight: 700;
+            margin-top: 5px;
+            display: inline;
+        }
+        .quick-wins-header {
+            color: var(--color-green-dark);
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 1rem;
+        }
+        .focus-header {
+            color: var(--color-purple-dark);
+            font-weight: 700;
+            margin-top: 10px;
+            display: inline;
+        }
+        
+        .quick-wins-item {
+            margin-bottom: 8px;
+            padding-right: 5px; 
+            line-height: 1.6;
+            text-align: right; 
+            border-bottom: 1px dotted #ccc; 
+            padding-bottom: 5px;
+            color: #333; 
+            font-weight: 400; 
+        }
+        .quick-wins-item:last-of-type {
+            border-bottom: none; 
+        }
+
+        .english-numbers {
+            font-family: Arial, Helvetica, sans-serif;
+            direction: ltr;
+            display: inline-block;
+        }
+        
+        /* --- استایل بخش تماس (لینکدین اصلاح شده) --- */
+        .contact-info {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #eef8ff; 
+            border-radius: 12px;
+            text-align: center;
+            color: #333;
+            border: 2px solid var(--color-primary); 
+            box-shadow: 0 6px 20px rgba(0, 76, 140, 0.15); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-info-text {
+            font-weight: 700; 
+            font-size: 1.15rem; 
+            color: var(--color-primary); 
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .contact-info-text i {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            color: var(--color-secondary);
+        }
+
+        .linkedin-link {
+            font-size: 1rem;
+            color: #0077b5; 
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 5px 15px;
+            border: 1px solid #0077b5;
+            border-radius: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .linkedin-link:hover {
+            background-color: #0077b5;
+            color: white;
+        }
+
+        .linkedin-link:hover .linkedin-icon {
+            color: white;
+        }
+
+        .linkedin-icon {
+            margin-left: 8px;
+            color: #0077b5;
+            transition: color 0.3s;
+        }
+        /* --- پایان استایل بخش تماس --- */
+
+        /* استایل نمودار */
+        .chart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .chart-label {
+            flex-basis: 150px;
+            flex-shrink: 0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chart-bar {
+            flex-grow: 1;
+            height: 18px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-right: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .bar-fill {
+            height: 100%;
+            transition: width 1s ease-out, background-color 1s ease-out; 
+            border-radius: 4px;
+        }
+
+        .score-display {
+            flex-basis: 30px;
+            flex-shrink: 0;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-align: left;
+        }
+        
+        /* اصلاح دکمه ارزیابی مجدد */
+        #reset-btn {
+            display: inline-block; 
+            width: auto; 
+            padding: 8px 15px; 
+            font-size: 1rem; 
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif; 
+            color: var(--color-primary); 
+            background-color: #ffffff; 
+            border: 2px solid var(--color-secondary); 
+            border-radius: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 25px;
+            margin-right: 10px; 
+        }
+
+        #reset-btn:hover {
+            background-color: #e6f7f5; 
+            transform: translateY(-1px);
+        }
+
+        /* کلاس برای پنهان کردن موقت دکمه‌ها در هنگام تصویربرداری */
+        .hide-on-capture {
+            display: none !important;
+        }
+        
+        /* دکمه دانلود PNG */
+        #download-btn {
+            background-color: var(--color-secondary);
+            margin-top: 30px;
+            width: auto;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+        }
+        #download-btn:hover {
+            background-color: #008779;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>معیار سنجش استراتژیک بلوغ تحول (Process-Structure-People)</h1>
+    <p style="text-align: center; font-size: 1.1rem; color: #555;">(Strategic Maturity Measurement Criterion)</p>
+    <p style="text-align: right; margin-bottom: 30px; border-bottom: 1px dashed #ccc; padding-bottom: 15px;">با پاسخ دادن به این سوالات (با طیف لیکرت)، سطح بلوغ فعلی سازمان خود در زمینه یکپارچگی فرآیندها، ساختار و نیروی انسانی را ارزیابی کنید.</p>
+    <form id="maturity-assessment-form">
+        <h2><i class="fas fa-layer-group icon-label"></i> سطح ۱: ابتدایی و عملیاتی (Initial & Siloed)</h2>
+        <div class="question-group">
+            <div class="question-item">
+                <span class="question-text">۱. آیا مالکیت و مسئولیت وظایف کلیدی (مانند کنترل هزینه) بین واحدها کاملاً شفاف و تعریف شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q1" id="q1_3" value="3" data-level="1"><label for="q1_3">بله</label>
+                    <input type="radio" name="q1" id="q1_1.5" value="1.5" data-level="1"><label for="q1_1.5">تا حدودی</label>
+                    <input type="radio" name="q1" id="q1_0" value="0" data-level="1"><label for="q1_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۲. آیا دانش و مستندات مورد نیاز برای اجرای وظایف کلیدی، مدون و قابل انتقال است (وابسته به فرد خاصی نیست)؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q2" id="q2_3" value="3" data-level="1"><label for="q2_3">بله</label>
+                    <input type="radio" name="q2" id="q2_1.5" value="1.5" data-level="1"><label for="q2_1.5">تا حدودی</label>
+                    <input type="radio" name="q2" id="q2_0" value="0" data-level="1"><label for="q2_0">خیر</label>
+                </span>
+            </div>
+             <div class="question-item">
+                <span class="question-text">۳. آیا ساختار و ارزیابی عملکرد شما بر اساس نتایج فرآیندی تعریف شده است (نه صرفاً فعالیت‌های روتین)؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q3" id="q3_3" value="3" data-level="1"><label for="q3_3">بله</label>
+                    <input type="radio" name="q3" id="q3_1.5" value="1.5" data-level="1"><label for="q3_1.5">تا حدودی</label>
+                    <input type="radio" name="q3" id="q3_0" value="0" data-level="1"><label for="q3_0">خیر</label>
+                </span>
+            </div>
+             <div class="question-item">
+                <span class="question-text">۴. آیا نقشه‌های فرآیندی رسمی (مثلاً با استاندارد BPMN 2.0) و مدل‌های فرآیندی جامع برای کل سازمان تدوین شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q4" id="q4_3" value="3" data-level="1"><label for="q4_3">بله</label>
+                    <input type="radio" name="q4" id="q4_1.5" value="1.5" data-level="1"><label for="q4_1.5">تا حدودی</label>
+                    <input type="radio" name="q4" id="q4_0" value="0" data-level="1"><label for="q4_0">خیر</label>
+                </span>
+            </div>
+        </div>
+
+        <h2><i class="fas fa-file-alt icon-label"></i> سطح ۲: مستندسازی و عملکردی (Documented & Functional)</h2>
+        <div class="question-group">
+            <div class="question-item">
+                <span class="question-text">۵. آیا شناسنامه‌های شغلی (Job Description & Specification) برای تمامی عناوین شغلی اصلی تدوین شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q5" id="q5_3" value="3" data-level="2"><label for="q5_3">بله</label>
+                    <input type="radio" name="q5" id="q5_1.5" value="1.5" data-level="2"><label for="q5_1.5">تا حدودی</label>
+                    <input type="radio" name="q5" id="q5_0" value="0" data-level="2"><label for="q5_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۶. آیا ساختار سازمانی رسمی وجود دارد که ساختار گزارش‌دهی را مشخص کند؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q6" id="q6_3" value="3" data-level="2"><label for="q6_3">بله</label>
+                    <input type="radio" name="q6" id="q6_1.5" value="1.5" data-level="2"><label for="q6_1.5">تا حدودی</label>
+                    <input type="radio" name="q6" id="q6_0" value="0" data-level="2"><label for="q6_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۷. آیا شناسنامه‌های شغلی به‌طور مستقیم به ورودی‌ها، خروجی‌ها و KPIهای فرآیندهای اصلی متصل هستند؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q7" id="q7_3" value="3" data-level="2"><label for="q7_3">بله</label>
+                    <input type="radio" name="q7" id="q7_1.5" value="1.5" data-level="2"><label for="q7_1.5">تا حدودی</label>
+                    <input type="radio" name="q7" id="q7_0" value="0" data-level="2"><label for="q7_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۸. آیا داده‌های شغلی به نظام‌های آموزش، جانشین‌پروری و سایر حوزه‌های مدیریت منابع انسانی متصل و یکپارچه شده‌اند؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q8" id="q8_3" value="3" data-level="2"><label for="q8_3">بله</label>
+                    <input type="radio" name="q8" id="q8_1.5" value="1.5" data-level="2"><label for="q8_1.5">تا حدودی</label>
+                    <input type="radio" name="q8" id="q8_0" value="0" data-level="2"><label for="q8_0">خیر</label>
+                </span>
+            </div>
+        </div>
+
+        <h2><i class="fas fa-handshake icon-label"></i> سطح ۳: یکپارچه‌سازی و فرآیند محور (Integrated & Process-Driven)</h2>
+        <div class="question-group">
+            <div class="question-item">
+                <span class="question-text">۹. آیا هر شغل، وظایف و مأموریت خود را مستقیماً از فرآیندهای اصلی سازمان (لینک Process → People) دریافت می‌کند؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q9" id="q9_3" value="3" data-level="3"><label for="q9_3">بله</label>
+                    <input type="radio" name="q9" id="q9_1.5" value="1.5" data-level="3"><label for="q9_1.5">تا حدودی</label>
+                    <input type="radio" name="q9" id="q9_0" value="0" data-level="3"><label for="q9_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۱۰. آیا ساختار سازمانی بر اساس خروجی‌های تحلیل فرآیندی (مثل تحلیل LEAN یا کارسنجی داده‌محور) بهینه‌سازی شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q10" id="q10_3" value="3" data-level="3"><label for="q10_3">بله</label>
+                    <input type="radio" name="q10" id="q10_1.5" value="1.5" data-level="3"><label for="q10_1.5">تا حدودی</label>
+                    <input type="radio" name="q10" id="q10_0" value="0" data-level="3"><label for="q10_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۱۱. آیا برای تعیین الزامات احراز شغل، از بنچمارک‌ها و استانداردهای مرجع بین‌المللی (مانند O*NET) استفاده شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q11" id="q11_3" value="3" data-level="3"><label for="q11_3">بله</label>
+                    <input type="radio" name="q11" id="q11_1.5" value="1.5" data-level="3"><label for="q11_1.5">تا حدودی</label>
+                    <input type="radio" name="q11" id="q11_0" value="0" data-level="3"><label for="q11_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۱۲. آیا ارزیابی عملکرد کارکنان کلیدی، بر اساس KPIهای فرآیندی تعریف‌شده انجام می‌شود؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q12" id="q12_3" value="3" data-level="3"><label for="q12_3">بله</label>
+                    <input type="radio" name="q12" id="q12_1.5" value="1.5" data-level="3"><label for="q12_1.5">تا حدودی</label>
+                    <input type="radio" name="q12" id="q12_0" value="0" data-level="3"><label for="q12_0">خیر</label>
+                </span>
+            </div>
+        </div>
+
+        <h2><i class="fas fa-rocket icon-label"></i> سطح ۴: استراتژیک، داده‌محور و چابک (Strategic, Agile & Data-Driven)</h2>
+        <div class="question-group">
+            <div class="question-item">
+                <span class="question-text">۱۳. آیا برای وظایف بین‌بخشی و حیاتی، یک نقشه پاسخگویی مجزا و شفاف (Critical Duties Map) تدوین شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q13" id="q13_3" value="3" data-level="4"><label for="q13_3">بله</label>
+                    <input type="radio" name="q13" id="q13_1.5" value="1.5" data-level="4"><label for="q13_1.5">تا حدودی</label>
+                    <input type="radio" name="q13" id="q13_0" value="0" data-level="4"><label for="q13_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۱۴. آیا داده‌های شغلی با هدف ساختاردهی و کدینگ، به‌طور کامل برای استقرار در ماژول HR/HCM سیستم ERP (مانند SAP) آماده شده است؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q14" id="q14_3" value="3" data-level="4"><label for="q14_3">بله</label>
+                    <input type="radio" name="q14" id="q14_1.5" value="1.5" data-level="4"><label for="q14_1.5">تا حدودی</label>
+                    <input type="radio" name="q14" id="q14_0" value="0" data-level="4"><label for="q14_0">خیر</label>
+                </span>
+            </div>
+             <div class="question-item">
+                <span class="question-text">۱۵. آیا یک نقشه راه برای ارتقاء تدریجی بلوغ فرآیندی (BPMM) تدوین و اجرا می‌شود؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q15" id="q15_3" value="3" data-level="4"><label for="q15_3">بله</label>
+                    <input type="radio" name="q15" id="q15_1.5" value="1.5" data-level="4"><label for="q15_1.5">تا حدودی</label>
+                    <input type="radio" name="q15" id="q15_0" value="0" data-level="4"><label for="q15_0">خیر</label>
+                </span>
+            </div>
+            <div class="question-item">
+                <span class="question-text">۱۶. آیا برای تضمین همسویی فرآیند، ساختار، سیستم و استراتژی، از رویکردهای چابک معماری سازمانی (Agile EA) استفاده می‌شود؟</span>
+                <span class="radio-options">
+                    <input type="radio" name="q16" id="q16_3" value="3" data-level="4"><label for="q16_3">بله</label>
+                    <input type="radio" name="q16" id="q16_1.5" value="1.5" data-level="4"><label for="q16_1.5">تا حدودی</label>
+                    <input type="radio" name="q16" id="q16_0" value="0" data-level="4"><label for="q16_0">خیر</label>
+                </span>
+            </div>
+        </div>
+
+        <button type="button" id="calculate-btn">محاسبه سطح بلوغ و دریافت تحلیل</button>
+    </form>
+
+    <div id="results">
+        <h3>نتیجه خودارزیابی معیار سنجش استراتژیک بلوغ تحول</h3>
+        <p style="font-size: 1.1rem; color: #555;">امتیاز کل شما: <span id="total-score" class="english-numbers" style="color: var(--color-primary); font-weight: 700;"></span> از <span class="english-numbers">48</span></p>
+        <p>سطح بلوغ تشخیص داده شده:</p>
+        <p id="result-level">سطح ...</p>
+        
+        <div id="level-scores-chart" style="margin-top: 30px; text-align: right;">
+            <p style="font-weight: 700; color: var(--color-primary); margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">تحلیل تفکیکی بلوغ (حداکثر <span class="english-numbers">12</span> امتیاز در هر سطح)</p>
+            <div class="chart-item">
+                <span class="chart-label">سطح ۱: ابتدایی</span>
+                <div class="chart-bar"><div id="bar-level-1" class="bar-fill" style="width: 0%; background-color: #f44336;"></div></div>
+                <span class="score-display english-numbers" id="score-level-1">۰</span>
+            </div>
+             <div class="chart-item">
+                <span class="chart-label">سطح ۲: مستندسازی</span>
+                <div class="chart-bar"><div id="bar-level-2" class="bar-fill" style="width: 0%; background-color: #f44336;"></div></div>
+                <span class="score-display english-numbers" id="score-level-2">۰</span>
+            </div>
+             <div class="chart-item">
+                <span class="chart-label">سطح ۳: یکپارچه‌سازی</span>
+                <div class="chart-bar"><div id="bar-level-3" class="bar-fill" style="width: 0%; background-color: #f44336;"></div></div>
+                <span class="score-display english-numbers" id="score-level-3">۰</span>
+            </div>
+             <div class="chart-item">
+                <span class="chart-label">سطح ۴: استراتژیک</span>
+                <div class="chart-bar"><div id="bar-level-4" class="bar-fill" style="width: 0%; background-color: #f44336;"></div></div>
+                <span class="score-display english-numbers" id="score-level-4">۰</span>
+            </div>
+        </div>
+        
+        <div class="recommendation" id="recommendation-text">...</div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button type="button" id="download-btn" class="action-btn" style="background-color: var(--color-secondary);"><i class="fas fa-image"></i> دریافت گزارش تحلیل (عکس PNG)</button>
+            <button type="button" id="reset-btn" title="ارزیابی مجدد"><i class="fas fa-sync-alt"></i> ارزیابی مجدد</button>
+        </div>
+
+
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #777; border-top: 1px dashed #ccc; padding-top: 20px; text-align: justify;">* این معیار ارزیابی بر اساس بهترین رویکردهای BPMM و اصول همسویی ۷S مکنزی و معماری چابک طراحی و کالیبره شده است.</p>
+
+        <div class="contact-info">
+            <p class="contact-info-text">
+                <i class="fas fa-user-tie"></i>
+                شهاب خانعلی زاده | مشاور- مربی مدیریت بلوغ فرآیندی و معمار تحول چابک
+            </p>
+            <a href="https://www.linkedin.com/in/shahab-khanalizadeh-0108a469/" target="_blank" class="linkedin-link">
+                <i class="fab fa-linkedin linkedin-icon"></i>
+                <span>LinkedIn: Shahab khanalizadeh</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+    const form = document.getElementById('maturity-assessment-form');
+    const resultsDiv = document.getElementById('results');
+    const downloadBtn = document.getElementById('download-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    
+    // تعریف گلوگاه‌های ارتقا (با حذف علامت : قبل از "گلوگاه شما،" در تمامی عبارات)
+    const bottleneckMessages = {
+        1: `<strong><i class="fas fa-exclamation-triangle"></i> گلوگاه ارتقا</strong> گلوگاه شما برای ورود به سطح ۲، عدم وجود «زبان مشترک» است. شما در اتصال «فعالیت‌های آشفته و فردی» به «فرآیندهای شفاف و استاندارد» گیر کرده‌اید.`,
+        2: `<strong><i class="fas fa-exclamation-triangle"></i> گلوگاه ارتقا</strong> گلوگاه شما، «گسست سیستمی» بین واحدهای فنی و انسانی است. شما در اتصال «مستندات فرآیند» (Process) به «واقعیت اجرایی و ساختار شغلی» (People) گیر کرده‌اید.`,
+        3: `<strong><i class="fas fa-exclamation-triangle"></i> گلوگاه ارتقا</strong> گلوگاه شما، عدم تبدیل «داده» به «دارایی» است. شما در اتصال «داده‌های یکپارچه» (از فرآیند و انسان) به «سیستم‌های تصمیم‌ساز و هسته دیجیتال» (Data/ERP) گیر کرده‌اید.`,
+        4: `<strong><i class="fas fa-exclamation-triangle"></i> گلوگاه ارتقا</strong> گلوگاه شما (یا ریسک آینده)، تبدیل شدن «پایداری» به «سکون» است. شما باید اتصال «معماری یکپارچه سازمان» (EA) به «تغییرات استراتژی کسب‌وکار» را برقرار کنید تا چابکی حفظ شود.`
+    };
+    
+    // تابع کمکی برای تولید گرادینت رنگی از قرمز (۰) به سبز (۱۲۰)
+    function getGradientColor(percentage) {
+        const h = percentage * 1.2; 
+        return `hsl(${h}, 85%, 45%)`;
+    }
+
+    // تابع تعیین رنگ بک‌گراند بر اساس سطح بلوغ
+    function getLevelBackgroundColor(level) {
+        const lightRed = '#ffe0e0';      
+        const lightOrange = '#fff5e0';   
+        const lightYellow = '#fffacd';   
+        const lightGreen = '#e8f5e9';    
+
+        const borderColorRed = '#f44336';
+        const borderColorOrange = '#ff9800';
+        const borderColorYellow = '#ffcc00'; 
+        const borderColorGreen = '#4caf50';
+
+        switch (level) {
+            case 1:
+                return { background: lightRed, border: borderColorRed };
+            case 2:
+                return { background: lightOrange, border: borderColorOrange };
+            case 3:
+                return { background: lightYellow, border: borderColorYellow }; 
+            case 4:
+                return { background: lightGreen, border: borderColorGreen };
+            default:
+                return { background: '#f7f7f7', border: '#ccc' }; 
+        }
+    }
+    
+    // --- اتصال منطق به رویداد کلیک دکمه محاسبه ---
+    document.getElementById('calculate-btn').addEventListener('click', function() {
+        let totalScore = 0;
+        let answeredCount = 0;
+        
+        let levelScores = { '1': 0, '2': 0, '3': 0, '4': 0 };
+
+        // محاسبه امتیاز کل و امتیاز تفکیکی هر سطح
+        for (let i = 1; i <= 16; i++) {
+            const questionName = 'q' + i;
+            const selectedRadio = document.querySelector(`input[name="${questionName}"]:checked`);
+            
+            if (selectedRadio) {
+                const scoreValue = parseFloat(selectedRadio.value);
+                totalScore += scoreValue; 
+                answeredCount++;
+
+                const level = selectedRadio.getAttribute('data-level');
+                if (level) {
+                    levelScores[level] += scoreValue;
+                }
+            }
+        }
+        
+        // (بررسی اعتبار: پاسخ کامل سوالات (۱۶ سوال))
+        if (answeredCount < 16) {
+            alert("خطا: لطفاَ به تمامی ۱۶ سوال پاسخ دهید تا نتایج محاسبه شوند.");
+            return;
+        }
+        
+        // --- نمایش نمودار تحلیلی (گرادیان رنگی) ---
+        function renderChart(scores) {
+            const maxScorePerLevel = 12; 
+            
+            for (const level in scores) {
+                const score = scores[level];
+                const percentage = (score / maxScorePerLevel) * 100;
+                
+                const barColor = getGradientColor(percentage);
+                
+                document.getElementById(`bar-level-${level}`).style.width = `${percentage.toFixed(1)}%`;
+                document.getElementById(`bar-level-${level}`).style.backgroundColor = barColor;
+                document.getElementById(`score-level-${level}`).textContent = score.toFixed(1);
+            }
+        }
+        
+        renderChart(levelScores);
+
+        // --- تعیین سطح بلوغ نهایی با روش پیش‌نیاز محور (Staged/Prerequisite-Based) ---
+        document.getElementById('total-score').textContent = totalScore.toFixed(1);
+        
+        let levelText = "";
+        let recommendation = "";
+        let finalLevel = 0; 
+        let levelColor = "";
+        const threshold = 9; // 75% of 12 for each level
+
+        let bottleneckHTML = ''; 
+        
+        if (levelScores['1'] < threshold) {
+            // Failed Level 1 (Initial)
+            finalLevel = 1;
+            levelText = "سطح ۱: ابتدایی و عملیاتی (Initial & Siloed) ⚠️";
+            levelColor = "#e53935";
+            bottleneckHTML = `<div class="bottleneck-highlight">${bottleneckMessages[1]}</div>`;
+            
+            recommendation = `
+                <p><span class="status-header">(تحلیل وضعیت)</span>: سازمان در فاز (عملیاتی و جزیره‌ای (Siloed)) قرار دارد. اقدامات بیشتر از آنکه در راستای جریان ارزش (Value Stream) باشند، بر (فعالیت‌های مجزا) متمرکز شده‌اند. ضعف محوری در (شفافیت فرآیندی) و اتکای بالا به دانش (فردی) است.</p>
+                <p><span class="challenge-header">(چالش اصلی)</span>: **ریسک عملیاتی بالا (High Operational Risk). سازمان به دلیل اتکای کامل به «دانش فردی» (Hero Culture) و عدم شفافیت فرآیندی، در برابر خطا، دوباره‌کاری و خروج افراد کلیدی به‌شدت آسیب‌پذیر است. «هزینه‌های پنهان» ناشی از این آشفتگی، دائماً در حال افزایش است.**</p>
+                ${bottleneckHTML}
+                <p class="quick-wins-header"><i class="fas fa-bolt"></i> Quick Wins (اقدامات سریع) برای ارتقا به سطح ۲:</p>
+                <p class="quick-wins-item"> • (تثبیت نقشه اصلی): تدوین (نقشه فرآیندهای اصلی (سطح ۱)) برای کل سازمان (تعیین ورودی/خروجی و مشتری).</p>
+                <p class="quick-wins-item"> • (رفع ابهام وظایف): اجرای پروژه (ماتریس پاسخگویی (RACI)) برای (۳ فرآیند حیاتی) (مثلاً کنترل هزینه یا تولید) جهت رفع تداخلات مالکیت.</p>
+                <p class="quick-wins-item"> • (آموزش فرآیندی): برگزاری کارگاه‌های آموزشی برای مدیران میانی با تمرکز بر (("KPI فرآیند محور")) و تغییر شیوه گزارش‌دهی.</p>
+                <p style="margin-top: 10px;"><span class="focus-header">(تمرکز ضروری)</span>: **ایجاد شفافیت پایه. تا زمانی که «مالکیت وظایف» (Structure) و «نقشه جریان کار» (Process) تثبیت نشود، ورود به فاز مستندسازی (سطح ۲)، تنها «بوروکراسی» را افزایش می‌دهد و ارزشی خلق نمی‌کند.**</p>
+            `;
+        } else if (levelScores['2'] < threshold) {
+            // Passed Level 1, Failed Level 2
+            finalLevel = 2;
+            levelText = "سطح ۲: مستندسازی و عملکردی (Documented & Functional) 📑";
+            levelColor = "#ffb300";
+            bottleneckHTML = `<div class="bottleneck-highlight">${bottleneckMessages[2]}</div>`;
+            
+             recommendation = `
+                <p><span class="status-header">(تحلیل وضعیت)</span>: شما زیرساخت‌های فرآیندی (فرآیندها و ساختار رسمی) را ایجاد کرده‌اید، اما سازمان در فاز (مستندسازی) متوقف شده است. ضعف اصلی در (همسویی عملیاتی) بین مستندات شغلی و واقعیت فرآیندی است؛ شناسنامه‌های شغلی تدوین شده‌اند، اما (کاملاً به خروجی‌های فرآیند متصل نیستند).</p>
+                <p><span class="challenge-header">(چالش اصلی)</span>: **توهم کنترل (Illusion of Control). سازمان سرمایه‌گذاری زیادی برای مستندسازی کرده، اما به دلیل گسست در اتصالات، این مستندات به «دارایی‌های متروک» (Shelf-ware) تبدیل شده‌اند. ارزش واقعی در شکاف بین واحدهای HR، IT و عملیات در حال نشت (Leakage) است.**</p>
+                ${bottleneckHTML}
+                <p class="quick-wins-header"><i class="fas fa-bolt"></i> Quick Wins (اقدامات سریع) برای ارتقا به سطح ۳:</p>
+                <p class="quick-wins-item"> • (لینک به عملکرد): تعریف و اجرای (KPIهای فرآیندی (Process-Based)) برای (۵ شغل کلیدی) که بیشترین تأثیر را بر خروجی‌های کسب‌وکار دارند.</p>
+                <p class="quick-wins-item"> • (عملیاتی کردن شناسنامه‌ها): اجرای یک ممیزی سریع برای اطمینان از اینکه مسئولیت‌ها در شناسنامه‌های شغلی (مستقیماً) از فعالیت‌های فرآیندی استخراج شده‌اند (لینک Process → People).</p>
+                <p class="quick-wins-item"> • (حل اختلافات گزارش‌دهی): شناسایی و اصلاح (۳ تداخل گزارش‌دهی) که به‌طور مداوم باعث تأخیر یا ناهماهنگی در فرآیندهای اصلی می‌شوند.</p>
+                <p style="margin-top: 10px;"><span class="focus-header">(تمرکز ضروری)</span>: **فعال‌سازی مستندات (Activating Assets). شما باید بر «زنده کردن» مستندات از طریق تقویت لینک People-Process (اتصال شغل به فرآیند) تمرکز کنید. بدون این فعال‌سازی، ورود به یکپارچگی سیستمی (سطح ۳) غیرممکن یا فاجعه‌بار خواهد بود.**</p>
+            `;
+        } else if (levelScores['3'] < threshold) {
+            // Passed Levels 1 & 2, Failed Level 3
+            finalLevel = 3;
+            levelText = "سطح ۳: یکپارچه‌سازی و فرآیند محور (Integrated & Process-Driven) 🤝";
+            levelColor = "#004c8c";
+            bottleneckHTML = `<div class="bottleneck-highlight">${bottleneckMessages[3]}</div>`;
+            
+             recommendation = `
+                <p><span class="status-header">(تحلیل وضعیت)</span>: سازمان به مرحله‌ای رسیده که فرآیندها و مستندات پایه را دارد، اما هنوز کاملاً (فرآیند محور و چابک) نیست. ضعف اصلی در (عمق یکپارچگی و بهینه‌سازی داده‌محور) نهفته است. ساختار سازمانی بر اساس تحلیل‌های عمیق فرآیندی بهینه‌سازی نشده و از ظرفیت داده‌ها برای ارتقا کارایی استفاده نمی‌شود.</p>
+                <p><span class="challenge-header">(چالش اصلی)</span>: **ناکارآمدی پنهان (Hidden Inefficiencies). اگرچه اتصالات برقرار است، اما سازمان هنوز از «داده‌های یکپارچه» خود برای بهینه‌سازی فعالانه (Proactive Optimization) و شکار سیستماتیک اتلاف‌ها (Waste) استفاده نمی‌کند. ظرفیت داده‌ها برای ارتقای تصمیم‌سازی مغفول مانده است.**</p>
+                ${bottleneckHTML}
+                <p class="quick-wins-header"><i class="fas fa-bolt"></i> Quick Wins (اقدامات سریع) برای ارتقا به سطح ۴:</p>
+                <p class="quick-wins-item"> • (حل گلوگاه‌ها (Bottleneck)): شناسایی و تحلیل (۳ گلوگاه (Bottleneck)) اصلی فرآیند (از لحاظ زمان یا هزینه) و تدوین یک طرح فوری برای چابک‌سازی همان بخش.</p>
+                <p class="quick-wins-item"> • (تثبیت وظایف مرزی): تدوین و تصویب (نقشه قلمرو وظایف حیاتی (Critical Duties Map)) برای وظایف بین‌بخشی و حیاتی (مثل هماهنگی واحدها)، جهت رفع نقاط کور پاسخگویی.</p>
+                <p class="quick-wins-item"> • (آماده‌سازی داده‌ها): انجام فاز اولیه (پاکسازی و ساختاردهی داده‌های شغلی) جهت ورود به ماژول HR/HCM سیستم‌های ERP (فاز کدینگ و آماده‌سازی).</p>
+                <p style="margin-top: 10px;"><span class="focus-header">(تمرکز ضروری)</span>: **تبدیل داده به تصمیم. تکمیل این سطح نیازمند آمادگی سیستمی (System Readiness) است. شما باید زیرساخت داده‌های شغلی و فرآیندی را برای ورود به ERP/HCM آماده کنید تا «داده» را به «دارایی تصمیم‌ساز» تبدیل نمایید.**</p>
+            `;
+        } else {
+            // Passed Levels 1, 2, 3, and 4
+            finalLevel = 4;
+            levelText = "سطح ۴: استراتژیک، داده‌محور و چابک (Leading Maturity) 🚀";
+            levelColor = "#00a896";
+            bottleneckHTML = `<div class="bottleneck-highlight">${bottleneckMessages[4]}</div>`;
+            
+            recommendation = `
+                <p><span class="status-header">(تحلیل قدرت)</span>: تبریک می‌گوییم! سازمان شما در بالاترین سطح بلوغ تحول (Process-Structure-People) قرار دارد و کاملاً (فرآیند محور (Process-Driven)) و (داده‌محور (Data-Driven)) است. شما همسویی کامل بین استراتژی، فرآیند، ساختار و نیروی انسانی را ایجاد کرده‌اید.</p>
+                <p><span class="challenge-header">(چالش اصلی)</span>: **ریسک رکود (Risk of Complacency). بزرگترین چالش در این سطح، «عادی‌سازی» موفقیت و فرسایش تدریجی همسویی به دلیل فشارهای روزمره است. سازمان باید از بلوغ خود نه فقط برای «کارایی»، بلکه برای «تطبیق‌پذیری استراتژیک» (Agile EA) استفاده کند.**</p>
+                ${bottleneckHTML}
+                <p class="quick-wins-header"><i class="fas fa-bolt"></i> Quick Wins (اقدامات سریع) برای حفظ و تعالی سطح:</p>
+                <p class="quick-wins-item"> • (حاکمیت مداوم): استقرار یک (نقش حاکمیتی) (مانند دفتر مدیریت فرآیند یا BPMO) برای به‌روزرسانی مستمر نقشه‌های فرآیندی و ساختاری.</p>
+                <p class="quick-wins-item"> • (چابک‌سازی معماری): استفاده از رویکرد (معماری سازمانی چابک (Agile EA)) برای ارزیابی سریع تأثیر تغییرات استراتژیک بر لایه‌های عملیاتی.</p>
+                <p class="quick-wins-item"> • (اندازه‌گیری ارزش): تمرکز بر محاسبه (بازگشت سرمایه (ROI) تحول) و استقرار برنامه‌های پیشرفته ارتقای بلوغ فرآیندی (BPMM).</p>
+                <p style="margin-top: 10px;"><span class="focus-header">(تمرکز ضروری)</span>: **حاکمیت بر تحول. هدف بعدی، تبدیل بلوغ به یک «قابلیت دائمی» (Durable Capability) است. شما باید بر «حاکمیت» (Governance) برای حفظ همسویی و «اندازه‌گیری» (ROI) تمرکز کنید تا اطمینان یابید معماری سازمان، سریع‌تر از تغییرات بازار تکامل می‌یابد.**</p>
+            `;
+        }
+        
+
+        document.getElementById('result-level').textContent = levelText;
+        document.getElementById('result-level').style.color = levelColor;
+        document.getElementById('recommendation-text').innerHTML = recommendation; 
+        
+        // --- اعمال رنگ بک‌گراند بر اساس سطح بلوغ نهایی ---
+        const colorSet = getLevelBackgroundColor(finalLevel);
+        resultsDiv.style.backgroundColor = colorSet.background;
+        resultsDiv.style.borderColor = colorSet.border;
+
+
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // --- منطق دانلود و ریست (بدون تغییر) ---
+    downloadBtn.addEventListener('click', function() {
+        // ۱. پنهان کردن دکمه‌ها برای تمیز بودن تصویر نهایی
+        downloadBtn.classList.add('hide-on-capture');
+        resetBtn.classList.add('hide-on-capture');
+
+        // ۲. تبدیل div نتایج به canvas/image
+        html2canvas(resultsDiv, {
+            scale: 2, // وضوح بالاتر برای PNG
+            useCORS: true, 
+            allowTaint: true
+        }).then(function(canvas) {
+            // ۳. برگرداندن دکمه‌ها
+            downloadBtn.classList.remove('hide-on-capture');
+            resetBtn.classList.remove('hide-on-capture');
+
+            // ۴. ایجاد لینک دانلود
+            const imageURL = canvas.toDataURL("image/png");
+            const a = document.createElement('a');
+            a.href = imageURL;
+            a.download = 'گزارش ارزیابی معیار سنجش استراتژیک بلوغ تحول.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }).catch(error => {
+            console.error('Error generating image:', error);
+            // اطمینان از نمایش مجدد دکمه‌ها در صورت خطا
+            downloadBtn.classList.remove('hide-on-capture');
+            resetBtn.classList.remove('hide-on-capture');
+            alert('خطا در تولید تصویر گزارش. لطفا دوباره تلاش کنید.');
+        });
+    });
+
+
+    document.getElementById('reset-btn').addEventListener('click', function() {
+        form.reset();
+        resultsDiv.style.display = 'none';
+
+        document.getElementById('total-score').textContent = '';
+        document.getElementById('result-level').textContent = 'سطح ...';
+        document.getElementById('recommendation-text').innerHTML = '...';
+        
+        // ریست کردن نوار پیشرفت نمودار و رنگ آن
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById(`bar-level-${i}`).style.width = `0%`;
+            document.getElementById(`bar-level-${i}`).style.backgroundColor = `#f44336`; 
+            document.getElementById(`score-level-${i}`).textContent = '۰';
+        }
+
+        // ریست کردن رنگ پس‌زمینه نتایج به حالت اولیه
+        resultsDiv.style.backgroundColor = '#f7f7f7'; 
+        resultsDiv.style.borderColor = '#ccc';
+        
+        // اسکرول به ابتدای فرم
+        document.getElementById('maturity-assessment-form').scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
